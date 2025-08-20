@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Summary | Ivoria Learning Academy</title>
+  <link rel="icon" type="image/png" href="image/FAVICON.png" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+  <!-- Remixicon for icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2361a5;
+      --accent: #f5b932;
+      --text: #212b36;
+      --background: #f9fafb;
+      --white: #fff;
+      --radius: 1rem;
+      --shadow: 0 8px 28px 0 rgba(35,97,165,0.11);
+      --border: 1px solid #e0e7ef;
+      --footer-bg: #193157;
+      --success: #2dc984;
+      --error: #e14d4d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    a:hover { color: var(--accent); }
+    img { max-width: 100%; display: block; border-radius: .6rem; }
+    button, input, select, textarea {
+      font-family: inherit;
+      outline: none;
+      border: none;
+      background: none;
+    }
+    /* Header */
+    .header {
+      width: 100%; background: var(--white); box-shadow: var(--shadow);
+      position: sticky; top: 0; z-index: 99;
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1200px; margin: 0 auto; padding: 1.2rem 2rem;
+      position: relative;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.7rem; font-size: 1.4rem; font-weight: 900; color: var(--primary);
+      letter-spacing: 1px;
+    }
+    .nav-logo img { width: 40px; height: 40px; }
+    .nav-list {
+      display: flex; align-items: center; gap: 2rem;
+    }
+    .nav-link {
+      color: var(--text); font-weight: 700;
+      font-size: 1rem; padding: 0.2rem 0;
+      position: relative;
+      transition: color .2s;
+    }
+    .nav-link.active, .nav-link:hover { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+    .nav-toggle { display: none; }
+    /* Main */
+    main {
+      max-width: 600px;
+      margin: 2rem auto 0 auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem 1.2rem 2.5rem 1.2rem;
+    }
+    .summary-title {
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .summary-intro {
+      color: #36577a;
+      font-size: 1.08rem;
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+    .order-details {
+      background: #f9fafb;
+      border-radius: .7rem;
+      border: var(--border);
+      box-shadow: 0 2px 10px 0 rgba(35,97,165,0.06);
+      margin-bottom: 2.2rem;
+      padding: 1.3rem 1rem;
+    }
+    .order-details-header {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: .7rem;
+      letter-spacing: 0.5px;
+    }
+    .details-list {
+      list-style: none;
+      margin-bottom: 0.6rem;
+    }
+    .details-list li {
+      padding: .3rem 0;
+      font-size: 1.01rem;
+      color: var(--text);
+      border-bottom: 1px solid #e0e7ef;
+    }
+    .details-list li:last-child { border-bottom: none; }
+
+    .order-total {
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-top: 0.7rem;
+      text-align: right;
+    }
+    .checkout-form-title {
+      font-size: 1.03rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: .6rem;
+    }
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .form-row label {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #36577a;
+    }
+    .form-row input, .form-row select, .form-row textarea {
+      font-size: 1.01rem;
+      padding: 0.7rem 0.6rem;
+      border-radius: .5rem;
+      border: 1px solid #e0e7ef;
+      background: #f9fafb;
+      color: var(--text);
+      margin-top: 0.1rem;
+      transition: border .2s;
+    }
+    .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+      border-color: var(--primary);
+      background: #eef4fb;
+    }
+    .form-row textarea {
+      resize: vertical;
+      min-height: 40px;
+      max-height: 120px;
+    }
+    .form-row select option { color: var(--text); }
+    .submit-btn {
+      background: var(--primary);
+      color: var(--white);
+      font-weight: 900;
+      font-size: 1.13rem;
+      border-radius: .6rem;
+      padding: 0.85rem 1.7rem;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background .2s, color .2s;
+      box-shadow: 0 2px 8px 0 rgba(35,97,165,0.09);
+      outline: none;
+    }
+    .submit-btn:hover {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .confirmation-message {
+      margin: 2rem 0 0 0;
+      background: #eafbf5;
+      border-radius: .7rem;
+      padding: 1.3rem 1.1rem;
+      border: 1px solid #cce4da;
+      color: var(--success);
+      font-size: 1.09rem;
+      box-shadow: 0 2px 10px 0 rgba(45,201,132,0.06);
+    }
+    .confirmation-title {
+      font-size: 1.22rem;
+      font-weight: 900;
+      color: var(--success);
+      margin-bottom: .2rem;
+    }
+    .confirmation-details {
+      color: #2361a5;
+      font-size: 1.07rem;
+      margin: 0.4rem 0 0 0;
+    }
+    .payment-reminder {
+      background: #fffbe7;
+      border-radius: .6rem;
+      padding: 1rem 1rem;
+      border: 1px solid #fae7b0;
+      color: var(--accent);
+      font-size: 0.99rem;
+      margin: 1.1rem 0 0 0;
+      box-shadow: 0 2px 10px 0 rgba(245,185,50,0.04);
+    }
+    /* Footer */
+    .footer {
+      background: var(--footer-bg); color: var(--white); padding: 2.5rem 0 1.1rem; margin-top: 2.5rem; border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .footer-container {
+      max-width: 900px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; align-items: flex-start; padding: 0 2rem;
+    }
+    .footer-brand { flex: 1 1 220px; margin-bottom: 2rem;}
+    .footer-logo {
+      display: flex; align-items: center; font-size: 1.2rem; font-weight: 900; gap: .5rem; margin-bottom: 0.45rem; color: var(--accent);
+    }
+    .footer-logo img { width: 32px; height: 32px; }
+    .footer-desc { color: #f5b932; font-size: 0.98rem; margin-bottom: .6rem;}
+    .footer-links-group { flex: 1 1 140px; margin-bottom: 2rem;}
+    .footer-links-title { font-size: 1rem; font-weight: 900; margin-bottom: .35rem; letter-spacing: .5px;}
+    .footer-links { display: flex; flex-direction: column; gap: .35rem;}
+    .footer-link { color: #eef4fb; font-size: .96rem; transition: color .2s; opacity: .94;}
+    .footer-link:hover { color: var(--accent);}
+    .footer-bottom { text-align: center; font-size: .95rem; color: #eef4fb; margin-top: 1.5rem; opacity: .85;}
+    .footer-bottom a { color: #fff; font-weight: 700; text-decoration: underline; transition: color .2s;}
+    .footer-bottom a:hover { color: var(--accent);}
+    /* Responsive */
+    @media (max-width: 780px) {
+      main { max-width: 95vw; }
+      .footer-container { flex-direction: column; gap: 2.2rem; align-items: flex-start; padding: 0 1rem; }
+    }
+    @media (max-width: 600px) {
+      main { padding: 1rem .2rem 1.8rem .2rem; }
+      .footer { padding: 1.2rem 0 .9rem; }
+      .footer-logo img { width: 24px; height: 24px; }
+    }
+    @media (max-width: 430px) {
+      main { padding: .8rem .1rem 1.2rem .1rem; }
+      .footer-logo img { width: 20px; height: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav">
+      <a href="index.html" class="nav-logo">
+        <img src="image/LOGO.png" alt="Ivoria Learning Academy Logo" />
+        Ivoria Learning Academy
+      </a>
+      <ul class="nav-list" id="nav-list">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="#shop" class="nav-link">Shop</a></li>
+        <li><a href="#about" class="nav-link">About Us</a></li>
+        <li><a href="#programs" class="nav-link">Programs</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- No toggle needed for summary page -->
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="summary-title">Order Summary</h1>
+    <div class="summary-intro">
+      Thank you for choosing Ivoria Learning Academy. Below is a summary of your order. Please review all details and complete the checkout form so we can process your request quickly and accurately.
+    </div>
+    <div class="order-details" id="order-details">
+      <div class="order-details-header">Your Selected Items</div>
+      <ul class="details-list" id="details-list">
+        <!-- Example static items for demo, will be dynamically rendered in production -->
+        <li>Ivoria Learning Kit <span style="float:right;">₱399.00</span></li>
+        <li>Reading Workbook <span style="float:right;">₱220.00</span></li>
+        <li>Math Practice Sheets <span style="float:right;">₱89.00</span></li>
+      </ul>
+      <div class="order-total" id="order-total">
+        Total: ₱708.00
+      </div>
+    </div>
+    <div class="checkout-form-title">Customer Information</div>
+    <form class="checkout-form" id="checkout-form" autocomplete="on">
+      <div class="form-row">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" />
+      </div>
+      <div class="form-row">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="you@email.com" />
+      </div>
+      <div class="form-row">
+        <label for="phone">Mobile Number</label>
+        <input type="tel" id="phone" name="phone" required placeholder="+63 912 658 4730" pattern="\+?\d{9,15}" />
+      </div>
+      <div class="form-row">
+        <label for="address">Delivery Address</label>
+        <textarea id="address" name="address" required placeholder="Complete address for delivery"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="payment">Preferred Payment Method</label>
+        <select id="payment" name="payment" required>
+          <option value="">Select payment method</option>
+          <option value="gcash">GCash</option>
+          <option value="bank">Bank Transfer</option>
+          <option value="cod">Cash on Delivery</option>
+          <option value="card">Debit/Credit Card</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="notes">Order Notes <span style="font-weight:400;color:#aaa;">(optional)</span></label>
+        <textarea id="notes" name="notes" placeholder="Special instructions, preferred colors, etc."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Submit Order</button>
+    </form>
+
+    <div class="confirmation-message" id="confirmation-message" style="display:none;">
+      <div class="confirmation-title"><i class="ri-checkbox-circle-line"></i> Order Submitted Successfully</div>
+      <div class="confirmation-details">
+        We appreciate your order! One of our team members will reach out to you shortly to confirm details such as product colors, availability, and any other specifics. Please verify all information during this step to ensure your order matches your preferences.<br><br>
+        After confirmation, you'll receive a secure payment link based on your chosen payment method.<br>
+      </div>
+      <div class="payment-reminder">
+        <strong>Important:</strong> Kindly complete your payment within <u>24 hours</u> of receiving the payment link. Unpaid orders will be automatically cancelled after this period.<br>
+        We’re here to assist you every step of the way. If you have questions, don’t hesitate to contact us!
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="image/LOGO.png" alt="Ivoria Learning Academy Logo" />
+          Ivoria Learning Academy
+        </div>
+        <div class="footer-desc">
+          B6 L22 P2 Sitio Lope, Talon Trece, Barangay Talon Trece, Las Piñas City, NCR, 1747, Philippines<br>
+          Email: <a href="mailto:info@ivoriaacademy.online" style="color:var(--accent);">info@ivoriaacademy.online</a><br>
+          Phone: <a href="tel:+639126584730" style="color:var(--accent);">+63 912 658 4730</a><br>
+          VAT/Reg No.: 742-580-913-000
+        </div>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-links-title">Company</div>
+        <div class="footer-links">
+          <a href="index.html#about" class="footer-link">About Us</a>
+          <a href="index.html#programs" class="footer-link">Programs</a>
+          <a href="index.html#contact" class="footer-link">Contact</a>
+        </div>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-links-title">Help</div>
+        <div class="footer-links">
+          <a href="index.html#faq" class="footer-link">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-links-title">Legal</div>
+        <div class="footer-links">
+          <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+          <a href="terms.html" class="footer-link">Terms of Service</a>
+          <a href="refund-policy.html" class="footer-link">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="footer-year"></span> Ivoria Learning Academy | VAT/Reg No.: 742-580-913-000<br>
+      Proudly serving Las Piñas City and the Philippines.
+    </div>
+  </footer>
+  <script>
+    // Footer year
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // Responsive navigation for future use (not displayed here)
+    // Form submission logic
+    document.getElementById('checkout-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('checkout-form').style.display = 'none';
+      document.getElementById('confirmation-message').style.display = 'block';
+      window.scrollTo({top: 0, behavior: "smooth"});
+    });
+  </script>
+</body>
+</html>
